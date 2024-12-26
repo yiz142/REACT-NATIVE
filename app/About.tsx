@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Image } from "react-native";
 export default function About() {
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/images/favicon.png')} style={styles.image} />
+      <Image source={require('../assets/images/team.png')} style={styles.image} />
       <Text style={styles.title}>About This App</Text>
       <Text style={styles.description}>
         This app is a Grocery Shopping List Recommendation System designed to help you optimize your grocery shopping by providing recommendations based on your shopping list. Using geo-mapping and location services, we ensure you get the best prices and the most convenient locations for your shopping needs.

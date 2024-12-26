@@ -1,20 +1,37 @@
-import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, Image, ScrollView } from 'react-native';
 
 export default function Chat() {
+  const [messages, setMessages] = useState([
+    { sender: "User", text: "Hello!" },
+    { sender: "Bot", text: "Hi! How can I help you today?" }
+  ]);
+  const [input, setInput] = useState("");
+
+  const handleSend = () => {
+    // Placeholder for sending message to OpenAI API
+    setMessages([...messages, { sender: "User", text: input }, { sender: "Bot", text: "This is a placeholder response." }]);
+    setInput("");
+  };
+
   return (
     <View style={styles.container}>
       <Image source={require('../assets/images/chat.png')} style={styles.image} />
       <Text style={styles.title}>Chat</Text>
-      <View style={styles.chatContainer}>
-        <Text style={styles.message}>User: Hello!</Text>
-        <Text style={styles.message}>Bot: Hi! How can I help you today?</Text>
-      </View>
+      <ScrollView style={styles.chatContainer}>
+        {messages.map((message, index) => (
+          <Text key={index} style={styles.message}>
+            {message.sender}: {message.text}
+          </Text>
+        ))}
+      </ScrollView>
       <TextInput
         style={styles.input}
         placeholder="Type your message..."
+        value={input}
+        onChangeText={setInput}
       />
-      <Button title="Send" onPress={() => {}} color="#4CAF50" />
+      <Button title="Send" onPress={handleSend} color="#4CAF50" />
     </View>
   );
 }
