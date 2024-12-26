@@ -1,10 +1,10 @@
-// filepath: /C:/Users/lukel/OneDrive/Documents/School/UCSD/2024/DSC180B/REACT-NATIVE/app/Chat.tsx
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
 
 export default function Chat() {
   return (
     <View style={styles.container}>
+      <Image source={require('../assets/images/chat.png')} style={styles.image} />
       <Text style={styles.title}>Chat</Text>
       <View style={styles.chatContainer}>
         <Text style={styles.message}>User: Hello!</Text>
@@ -14,7 +14,7 @@ export default function Chat() {
         style={styles.input}
         placeholder="Type your message..."
       />
-      <Button title="Send" onPress={() => {}} />
+      <Button title="Send" onPress={() => {}} color="#4CAF50" />
     </View>
   );
 }
@@ -24,12 +24,19 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
+    backgroundColor: "#f8f8f8",
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: "#4CAF50",
   },
   chatContainer: {
     flex: 1,
@@ -38,6 +45,7 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 16,
     marginBottom: 10,
+    color: "#555",
   },
   input: {
     height: 40,
@@ -45,5 +53,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+    backgroundColor: "#fff",
   },
 });
