@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image, ScrollView } from 'react-native';
+import axios from 'axios';
 
 export default function Chat() {
   const [messages, setMessages] = useState([
@@ -8,9 +9,38 @@ export default function Chat() {
   ]);
   const [input, setInput] = useState("");
 
-  const handleSend = () => {
-    // Placeholder for sending message to OpenAI API
-    setMessages([...messages, { sender: "User", text: input }, { sender: "Bot", text: "This is a placeholder response." }]);
+  const handleSend = async () => {
+    if (input.trim() === "") return;
+
+    // Add user message to chat
+    setMessages([...messages, { sender: "User", text: input }]);
+
+    try {
+      // Call the backend API
+      const res = await axios.post('https://llmaps.site/recommend-cheapest-store', {
+        latitude: 37.7749,  // Example coordinates (San Francisco), replace with user input if needed
+        longitude: -122.4194,
+        items: input.split(',').map(item => item.trim())  // Split input into items by comma
+      });
+
+      // Extract recommendation from response
+      const recommendation = res.data.llm_recommendation;
+
+      // Add bot response to chat
+      setMessages(prevMessages => [
+        ...prevMessages,
+        { sender: "Bot", text: recommendation }
+      ]);
+
+    } catch (error) {
+      console.error("Error fetching recommendation:", error);
+      setMessages(prevMessages => [
+        ...prevMessages,
+        { sender: "Bot", text: "Sorry, I couldn't fetch a recommendation. Please try again." }
+      ]);
+    }
+
+    // Clear input
     setInput("");
   };
 
@@ -27,7 +57,7 @@ export default function Chat() {
       </ScrollView>
       <TextInput
         style={styles.input}
-        placeholder="Type your message..."
+        placeholder="Type your items (comma-separated)..."
         value={input}
         onChangeText={setInput}
       />
